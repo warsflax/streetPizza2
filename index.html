@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Street Pizza – Champion du Monde</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@100;300;400&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════
+   THEME VARIABLES
+══════════════════════════════════════ */
+:root,
+[data-theme="dark"] {
+  --bg:            #0a0a0a;
+  --bg-card:       #111111;
+  --bg-card-hover: #181818;
+  --bg-extra:      #111111;
+  --nav-bg:        rgba(10,10,10,0.88);
+  --text-main:     #F2EDE4;
+  --text-sub:      rgba(242,237,228,0.5);
+  --text-muted:    rgba(242,237,228,0.35);
+  --accent:        #C9953A;
+  --border:        rgba(201,149,58,0.22);
+  --grid-gap:      rgba(201,149,58,0.18);
+  --hero-glow1:    rgba(201,149,58,0.08);
+  --hero-glow2:    rgba(201,149,58,0.04);
+  --grid-line:     rgba(201,149,58,0.05);
+  --shine:         rgba(255,255,255,0.03);
+  --card-hover-glow: rgba(201,149,58,0.06);
+  --footer-bg:     #080808;
+  --toggle-track:  #222;
+  --toggle-thumb:  #C9953A;
+  --italy-bar:     0;
+}
+
+[data-theme="light"] {
+  --bg:            #f9f6f1;
+  --bg-card:       #ffffff;
+  --bg-card-hover: #fff8f8;
+  --bg-extra:      #ffffff;
+  --nav-bg:        rgba(249,246,241,0.93);
+  --text-main:     #1a1a1a;
+  --text-sub:      #444444;
+  --text-muted:    #666666;
+  --accent:        #CC2929;
+  --border:        rgba(204,41,41,0.18);
+  --grid-gap:      rgba(204,41,41,0.12);
+  --hero-glow1:    rgba(204,41,41,0.06);
+  --hero-glow2:    rgba(45,122,58,0.05);
+  --grid-line:     rgba(204,41,41,0.05);
+  --shine:         rgba(204,41,41,0.025);
+  --card-hover-glow: rgba(204,41,41,0.04);
+  --footer-bg:     #f0ece6;
+  --toggle-track:  #e5ddd4;
+  --toggle-thumb:  #CC2929;
+  --italy-bar:     1;
+}
+
+/* ══════════════════════════════════════
+   BASE
+══════════════════════════════════════ */
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg); color: var(--text-main);
+  font-family:'Josefin Sans',sans-serif; font-weight:300;
+  overflow-x:hidden; cursor:none;
+  transition: background 0.55s, color 0.55s;
+}
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:1000;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--accent); }
+
+/* ══════════════════════════════════════
+   CURSOR
+══════════════════════════════════════ */
+.cursor {
+  position:fixed; top:0; left:0; width:9px; height:9px;
+  background:var(--accent); border-radius:50%;
+  pointer-events:none; z-index:9999;
+  transform:translate(-50%,-50%);
+  transition: background 0.4s;
+}
+.cursor-ring {
+  position:fixed; top:0; left:0; width:34px; height:34px;
+  border:1px solid var(--accent); border-radius:50%; opacity:0.55;
+  pointer-events:none; z-index:9998;
+  transform:translate(-50%,-50%);
+  transition: width 0.3s, height 0.3s, border-color 0.4s;
+}
+.cursor-ring.big { width:52px; height:52px; opacity:0.85; }
+
+/* ══════════════════════════════════════
+   NAV
+══════════════════════════════════════ */
+nav {
+  position:fixed; top:0; width:100%; z-index:500;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.3rem 3rem;
+  background:var(--nav-bg); backdrop-filter:blur(22px);
+  border-bottom:1px solid var(--border);
+  transition: padding 0.4s, background 0.55s, border-color 0.55s;
+}
+nav.scrolled { padding:0.85rem 3rem; }
+.nav-logo {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem; letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--accent); transition:color 0.55s;
+}
+.nav-right { display:flex; align-items:center; gap:2rem; }
+.nav-links { display:flex; gap:2rem; list-style:none; }
+.nav-links a {
+  font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase;
+  color:var(--text-sub); text-decoration:none; transition:color 0.3s;
+}
+.nav-links a:hover { color:var(--accent); }
+
+/* ── TOGGLE BUTTON ── */
+.theme-toggle-btn {
+  display:flex; align-items:center; gap:0.65rem;
+  background:none; border:1px solid var(--border);
+  padding:0.4rem 0.85rem 0.4rem 0.65rem;
+  cursor:none; transition: border-color 0.4s, background 0.4s;
+  border-radius:2px;
+}
+.theme-toggle-btn:hover { border-color:var(--accent); background:rgba(0,0,0,0.04); }
+
+.toggle-switch {
+  position:relative; width:36px; height:20px;
+  background:var(--toggle-track);
+  border-radius:10px;
+  border:1px solid var(--border);
+  flex-shrink:0;
+  transition: background 0.4s, border-color 0.4s;
+}
+.toggle-switch::after {
+  content:'';
+  position:absolute; top:2px; left:2px;
+  width:14px; height:14px;
+  background:var(--toggle-thumb);
+  border-radius:50%;
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), background 0.4s;
+}
+[data-theme="light"] .toggle-switch::after { transform:translateX(16px); }
+
+.toggle-text {
+  font-size:0.56rem; letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--text-sub); white-space:nowrap; transition:color 0.4s;
+  font-family:'Josefin Sans',sans-serif;
+}
+
+/* Italian tricolore mini flag next to label in light mode */
+.toggle-flag {
+  display:flex; gap:1px; align-items:center;
+  opacity:0; transition:opacity 0.4s; width:0; overflow:hidden;
+}
+[data-theme="light"] .toggle-flag { opacity:1; width:auto; }
+.toggle-flag span { width:7px; height:14px; border-radius:1px; }
+.tf-g { background:#2D7A3A; }
+.tf-w { background:#e8e0d6; border:1px solid #ccc; }
+.tf-r { background:#CC2929; }
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+.hero {
+  min-height:100vh; display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  text-align:center; padding:6rem 2rem 4rem;
+  position:relative; overflow:hidden;
+}
+.hero-bg {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 35%, var(--hero-glow1) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 75%, var(--hero-glow2) 0%, transparent 60%);
+  transition:background 0.55s;
+}
+.hero-lines {
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size:80px 80px;
+  mask-image:radial-gradient(ellipse 65% 65% at center, black 20%, transparent 100%);
+}
+/* Italy flag bands visible in light mode */
+.hero-italy {
+  position:absolute; inset:0;
+  display:flex; pointer-events:none;
+  opacity:0; transition:opacity 0.55s;
+}
+[data-theme="light"] .hero-italy { opacity:1; }
+.hi-g { flex:1; background:linear-gradient(90deg, rgba(45,122,58,0.09) 0%, transparent 100%); }
+.hi-w { flex:1; }
+.hi-r { flex:1; background:linear-gradient(270deg, rgba(204,41,41,0.09) 0%, transparent 100%); }
+
+.hero-badge {
+  width:118px; height:auto; margin-bottom:2.5rem;
+  opacity:0; animation:fadeUp 1.2s 0.3s forwards;
+  filter:drop-shadow(0 0 28px rgba(201,149,58,0.22));
+  transition:filter 0.55s;
+}
+[data-theme="light"] .hero-badge { filter:drop-shadow(0 4px 18px rgba(0,0,0,0.1)); }
+
+.hero-eyebrow {
+  font-size:0.58rem; letter-spacing:0.55em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:1.4rem;
+  opacity:0; animation:fadeUp 1s 0.6s forwards; transition:color 0.55s;
+}
+.hero-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3.2rem,8vw,7rem); font-weight:300; line-height:1.05;
+  color:var(--text-main); opacity:0; animation:fadeUp 1s 0.8s forwards;
+  transition:color 0.55s;
+}
+.hero-title em { font-style:italic; color:var(--accent); transition:color 0.55s; }
+[data-theme="light"] .hero-title em {
+  background:linear-gradient(90deg,#2D7A3A 0%,#888 45%,#CC2929 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.hero-sub {
+  font-size:0.65rem; letter-spacing:0.32em; text-transform:uppercase;
+  color:var(--text-sub); margin-top:1.8rem;
+  opacity:0; animation:fadeUp 1s 1.1s forwards; transition:color 0.55s;
+}
+.hero-divider {
+  width:1px; height:70px;
+  background:linear-gradient(to bottom, var(--accent), transparent);
+  margin:2.5rem auto 0;
+  opacity:0; animation:fadeUp 1s 1.3s forwards; transition:background 0.55s;
+}
+
+/* ══════════════════════════════════════
+   FILTERS
+══════════════════════════════════════ */
+.filters-section { padding:3.5rem 3rem 2rem; text-align:center; }
+.filters-label {
+  font-size:0.58rem; letter-spacing:0.42em; text-transform:uppercase;
+  color:var(--text-muted); margin-bottom:1.4rem; transition:color 0.55s;
+}
+.filters { display:flex; gap:0.6rem; justify-content:center; flex-wrap:wrap; }
+.filter-btn {
+  padding:0.5rem 1.4rem; border:1px solid var(--border);
+  background:transparent; color:var(--text-sub);
+  font-family:'Josefin Sans',sans-serif; font-size:0.58rem;
+  letter-spacing:0.28em; text-transform:uppercase; cursor:none;
+  position:relative; overflow:hidden;
+  transition:color 0.3s, border-color 0.4s;
+}
+.filter-btn::before {
+  content:''; position:absolute; inset:0; background:var(--accent);
+  transform:translateX(-101%); transition:transform 0.3s ease; z-index:-1;
+}
+.filter-btn.active::before, .filter-btn:hover::before { transform:translateX(0); }
+.filter-btn.active, .filter-btn:hover { color:#fff; border-color:var(--accent); }
+
+/* ══════════════════════════════════════
+   SECTION HEADING
+══════════════════════════════════════ */
+.menu-section { padding:2rem 3rem 5rem; max-width:1400px; margin:0 auto; }
+.section-heading { text-align:center; margin-bottom:3.5rem; }
+.section-heading h2 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,4vw,3.2rem); font-weight:300;
+  color:var(--text-main); transition:color 0.55s;
+}
+.section-heading h2 span { color:var(--accent); font-style:italic; transition:color 0.55s; }
+.heading-line {
+  width:50px; height:1px; background:var(--accent);
+  margin:0.8rem auto 0; transition:background 0.55s;
+}
+
+/* ══════════════════════════════════════
+   PIZZA GRID & CARDS
+══════════════════════════════════════ */
+.pizza-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(310px,1fr));
+  gap:1.5px; background:var(--grid-gap); border:1px solid var(--grid-gap);
+  transition:background 0.55s, border-color 0.55s;
+}
+.pizza-card {
+  background:var(--bg-card); padding:2rem;
+  position:relative; overflow:hidden;
+  opacity:0; transform:translateY(18px);
+  transition:background 0.4s, opacity 0.55s, transform 0.55s;
+}
+.pizza-card.visible { opacity:1; transform:translateY(0); }
+.pizza-card.hidden-card { display:none; }
+.pizza-card:hover { background:var(--bg-card-hover); }
+
+/* Italian tricolore left border (light mode) */
+.pizza-card::before {
+  content:''; position:absolute; top:0; left:0;
+  width:3px; height:100%;
+  background:linear-gradient(to bottom, #2D7A3A 33%, #ffffff 33% 66%, #CC2929 66%);
+  opacity:0; transition:opacity 0.55s;
+}
+[data-theme="light"] .pizza-card::before { opacity:1; }
+
+.card-glow {
+  position:absolute; inset:0;
+  background:linear-gradient(135deg, var(--card-hover-glow) 0%, transparent 55%);
+  opacity:0; transition:opacity 0.4s; pointer-events:none;
+}
+.pizza-card:hover .card-glow { opacity:1; }
+.card-shine {
+  position:absolute; top:-50%; left:-70%; width:55%; height:200%;
+  background:linear-gradient(105deg, transparent 35%, var(--shine) 50%, transparent 65%);
+  transform:skewX(-15deg); transition:left 0.65s ease; pointer-events:none;
+}
+.pizza-card:hover .card-shine { left:130%; }
+
+.card-number {
+  font-size:0.5rem; letter-spacing:0.38em; text-transform:uppercase;
+  color:var(--accent); opacity:0.65; margin-bottom:0.7rem; transition:color 0.55s;
+}
+.card-name {
+  font-family:'Cormorant Garamond',serif; font-size:1.55rem; font-weight:400;
+  color:var(--text-main); line-height:1.2; margin-bottom:0.3rem; transition:color 0.55s;
+}
+.card-desc-fr {
+  font-size:0.7rem; color:var(--text-sub); line-height:1.75;
+  margin-bottom:0.3rem; transition:color 0.55s;
+}
+.card-desc-en {
+  font-size:0.62rem; color:var(--text-muted); font-style:italic;
+  line-height:1.65; margin-bottom:1.4rem;
+  border-left:1px solid var(--border); padding-left:0.7rem;
+  transition:color 0.55s, border-color 0.55s;
+}
+.card-footer { display:flex; align-items:center; justify-content:space-between; }
+.card-tags { display:flex; gap:0.35rem; flex-wrap:wrap; }
+.tag {
+  font-size:0.48rem; letter-spacing:0.2em; text-transform:uppercase;
+  padding:0.18rem 0.55rem; border:1px solid; transition:border-color 0.4s, color 0.4s;
+}
+.tag.viande  { border-color:rgba(180,55,55,0.4); color:#c97070; }
+.tag.veggie  { border-color:rgba(60,150,70,0.4); color:#6faa77; }
+.tag.fromage { border-color:var(--border); color:var(--accent); }
+.tag.poisson { border-color:rgba(70,130,190,0.4); color:#7aaad4; }
+[data-theme="light"] .tag.viande  { border-color:rgba(204,41,41,0.38); color:#CC2929; }
+[data-theme="light"] .tag.veggie  { border-color:rgba(45,122,58,0.38); color:#2D7A3A; }
+[data-theme="light"] .tag.fromage { border-color:rgba(204,41,41,0.25); color:#CC2929; }
+.card-price {
+  font-family:'Cormorant Garamond',serif; font-size:1.5rem;
+  color:var(--accent); font-weight:300; white-space:nowrap; transition:color 0.55s;
+}
+.price-sup { font-size:0.78rem; vertical-align:super; }
+
+/* ══════════════════════════════════════
+   EXTRAS
+══════════════════════════════════════ */
+.extras-wrap { max-width:900px; margin:0 auto; padding:0 3rem; }
+.extras-section {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:1.5px; background:var(--grid-gap); border:1px solid var(--grid-gap);
+  margin-bottom:6rem; transition:background 0.55s, border-color 0.55s;
+}
+.extras-block { background:var(--bg-extra); padding:2.5rem; transition:background 0.55s; }
+.extras-block-title {
+  font-size:0.58rem; letter-spacing:0.42em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:1.4rem; transition:color 0.55s;
+}
+.extras-item {
+  display:flex; justify-content:space-between; align-items:baseline;
+  margin-bottom:0.9rem; padding-bottom:0.9rem;
+  border-bottom:1px solid var(--border); transition:border-color 0.55s;
+}
+.extras-item:last-child { border-bottom:none; margin-bottom:0; }
+.extras-item-name {
+  font-family:'Cormorant Garamond',serif; font-size:1.15rem;
+  color:var(--text-main); transition:color 0.55s;
+}
+.extras-note { font-size:0.58rem; color:var(--text-muted); margin-top:0.2rem; transition:color 0.55s; }
+.extras-item-price {
+  font-family:'Cormorant Garamond',serif; font-size:1.15rem;
+  color:var(--accent); transition:color 0.55s;
+}
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer {
+  background:var(--footer-bg); border-top:1px solid var(--border);
+  padding:4rem 3rem; text-align:center;
+  transition:background 0.55s, border-color 0.55s;
+}
+.footer-logo {
+  font-family:'Cormorant Garamond',serif; font-size:1.7rem; font-weight:300;
+  color:var(--accent); letter-spacing:0.12em; margin-bottom:0.4rem; transition:color 0.55s;
+}
+.footer-sub {
+  font-size:0.58rem; letter-spacing:0.35em; text-transform:uppercase;
+  color:var(--text-muted); margin-bottom:1.5rem; transition:color 0.55s;
+}
+.footer-flag {
+  display:flex; justify-content:center; gap:3px; margin-bottom:1.2rem;
+  opacity:0; transition:opacity 0.55s;
+}
+[data-theme="light"] .footer-flag { opacity:1; }
+.footer-flag span { width:22px; height:3px; border-radius:1px; }
+.ff-g { background:#2D7A3A; } .ff-w { background:#bbb; } .ff-r { background:#CC2929; }
+.footer-thanks {
+  font-family:'Cormorant Garamond',serif; font-size:0.95rem;
+  font-style:italic; color:var(--text-muted); transition:color 0.55s;
+}
+
+/* ══════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media (max-width:768px) {
+  nav { padding:1.1rem 1.5rem; }
+  .nav-links { display:none; }
+  .toggle-text { display:none; }
+  .hero { padding:5.5rem 1.5rem 3rem; }
+  .filters-section, .menu-section { padding-left:1rem; padding-right:1rem; }
+  .pizza-grid { grid-template-columns:1fr; }
+  .extras-wrap { padding:0 1rem; }
+  .extras-section { grid-template-columns:1fr; }
+  footer { padding:3rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">SP · Champion</div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#boissons">Boissons</a></li>
+      <li><a href="#supplements">Suppléments</a></li>
+    </ul>
+
+    <!-- THEME TOGGLE -->
+    <button class="theme-toggle-btn" id="themeToggleBtn">
+      <div class="toggle-flag">
+        <span class="tf-g"></span><span class="tf-w"></span><span class="tf-r"></span>
+      </div>
+      <div class="toggle-switch"></div>
+      <span class="toggle-text" id="toggleText">🌙 Sombre</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-italy">
+    <div class="hi-g"></div><div class="hi-w"></div><div class="hi-r"></div>
+  </div>
+  <img class="hero-badge" src="/mnt/user-data/uploads/WhatsApp_Image_2026-03-08_at_6_45_35_PM.jpeg" alt="Street Pizza Logo">
+  <p class="hero-eyebrow">Bienvenue · Welcome</p>
+  <h1 class="hero-title">Street<br><em>Pizza</em></h1>
+  <p class="hero-sub">Champion du Monde · Fondé par Idrissi Abddsamad</p>
+  <div class="hero-divider"></div>
+</section>
+
+<!-- FILTERS -->
+<div class="filters-section">
+  <p class="filters-label">Filtrer le menu · Filter the menu</p>
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">Toutes</button>
+    <button class="filter-btn" data-filter="viande">🥩 Viande</button>
+    <button class="filter-btn" data-filter="veggie">🌿 Végétarien</button>
+    <button class="filter-btn" data-filter="fromage">🧀 Fromage</button>
+    <button class="filter-btn" data-filter="poisson">🐟 Poisson</button>
+  </div>
+</div>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="section-heading">
+    <h2>Notre <span>Menu</span></h2>
+    <div class="heading-line"></div>
+  </div>
+  <div class="pizza-grid" id="pizzaGrid">
+
+    <div class="pizza-card" data-tags="viande fromage">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">01</div>
+      <div class="card-name">La Marocaine</div>
+      <div class="card-desc-fr">Ratatouille, abricot moelleux, chorizo, chantilly de fromage Boursin, cerneaux de noix, coriandre, origan, olives.</div>
+      <div class="card-desc-en">Ratatouille, soft apricot, chorizo with Boursin cream cheese, walnuts, coriander, oregano, olives.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag viande">Viande</span><span class="tag fromage">Fromage</span></div>
+        <div class="card-price">16<span class="price-sup">€90</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="poisson">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">02</div>
+      <div class="card-name">Fraîcheur</div>
+      <div class="card-desc-fr">Crème fraîche, mozzarella, champignons, œuf, origan, olive. Après cuisson : saumon fumé émincé.</div>
+      <div class="card-desc-en">Fresh cream, mozzarella, mushrooms, egg, oregano, olive. After cooking: sliced smoked salmon.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag poisson">Poisson</span></div>
+        <div class="card-price">16<span class="price-sup">€90</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="viande">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">03</div>
+      <div class="card-name">Cannibale</div>
+      <div class="card-desc-fr">Sauce tomate, mozzarella, viande hachée, oignons, poivrons, œuf, origan, olive.</div>
+      <div class="card-desc-en">Tomato sauce, mozzarella, minced meat, onions, peppers, egg, oregano, olive.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag viande">Viande</span></div>
+        <div class="card-price">16<span class="price-sup">€50</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="veggie fromage">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">04</div>
+      <div class="card-name">Fico</div>
+      <div class="card-desc-fr">Crème fraîche, oignons rouges, chèvre, figue sèche, miel, origan, olive.</div>
+      <div class="card-desc-en">Fresh cream, red onions, goat cheese, dried fig, honey, oregano, olive.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag veggie">Végétarien</span><span class="tag fromage">Fromage</span></div>
+        <div class="card-price">16<span class="price-sup">€</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="poisson">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">05</div>
+      <div class="card-name">Mimosa</div>
+      <div class="card-desc-fr">Sauce tomate, mozzarella, thon, œuf, coriandre, origan, olive.</div>
+      <div class="card-desc-en">Tomato sauce, mozzarella, tuna, egg, coriander, oregano, olive.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag poisson">Poisson</span></div>
+        <div class="card-price">14<span class="price-sup">€</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="veggie">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">06</div>
+      <div class="card-name">Roquetta</div>
+      <div class="card-desc-fr">Sauce tomate, mozzarella, oignons, tomates cerises, parmesan, roquette, origan, olive.</div>
+      <div class="card-desc-en">Tomato sauce, mozzarella, onions, cherry tomatoes, parmesan, arugula, oregano, olive.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag veggie">Végétarien</span></div>
+        <div class="card-price">14<span class="price-sup">€</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="viande">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">07</div>
+      <div class="card-name">Indiana</div>
+      <div class="card-desc-fr">Sauce tomate, mozzarella, poulet mariné au curry, oignons, roquette, origan, olive.</div>
+      <div class="card-desc-en">Tomato sauce, mozzarella, chicken marinated in curry, onions, arugula, oregano, olive.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag viande">Viande</span></div>
+        <div class="card-price">16<span class="price-sup">€</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="fromage">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">08</div>
+      <div class="card-name">Mont-Blanc</div>
+      <div class="card-desc-fr">Crème fraîche, mozzarella, mozzarella fraîche, chèvre, échalote, origan, olive.</div>
+      <div class="card-desc-en">Fresh cream, mozzarella, fresh mozzarella, goat cheese, shallot, oregano, olive.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag fromage">Fromage</span></div>
+        <div class="card-price">16<span class="price-sup">€</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="viande">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">09</div>
+      <div class="card-name">Reine</div>
+      <div class="card-desc-fr">Sauce tomate, mozzarella, champignons, jambon, origan, olive.</div>
+      <div class="card-desc-en">Tomato sauce, mozzarella, mushrooms, ham, oregano, olive.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag viande">Viande</span></div>
+        <div class="card-price">13<span class="price-sup">€</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="viande">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">10</div>
+      <div class="card-name">Calzone</div>
+      <div class="card-desc-fr">Sauce tomate, jambon, champignons, œuf, origan, olive.</div>
+      <div class="card-desc-en">Tomato sauce, ham, mushrooms, egg, oregano, olive.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag viande">Viande</span></div>
+        <div class="card-price">14<span class="price-sup">€</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="viande">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">11</div>
+      <div class="card-name">Chorizo</div>
+      <div class="card-desc-fr">Sauce tomate, mozzarella, oignons, œuf, chorizo après cuisson, origan, olive.</div>
+      <div class="card-desc-en">Tomato sauce, mozzarella, onions, egg, chorizo after cooking, oregano, olive.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag viande">Viande</span></div>
+        <div class="card-price">15<span class="price-sup">€</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="fromage">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">12</div>
+      <div class="card-name">4 Fromages</div>
+      <div class="card-desc-fr">Sauce tomate, mozzarella, chèvre, reblochon, roquefort, raclette, origan, olive.</div>
+      <div class="card-desc-en">Tomato sauce, mozzarella, goat cheese, reblochon, roquefort, raclette, oregano, olive.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag fromage">Fromage</span></div>
+        <div class="card-price">14<span class="price-sup">€50</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="veggie fromage">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">13</div>
+      <div class="card-name">Chevrette</div>
+      <div class="card-desc-fr">Crème fraîche, mozzarella, champignons, chèvre, miel, origan, olive.</div>
+      <div class="card-desc-en">Fresh cream, mozzarella, mushrooms, goat cheese, honey, oregano, olive.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag fromage">Fromage</span></div>
+        <div class="card-price">14<span class="price-sup">€50</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="viande fromage">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">14</div>
+      <div class="card-name">Montagnard</div>
+      <div class="card-desc-fr">Crème fraîche, mozzarella, oignons, pommes de terre, lardons, reblochon, origan, olive.</div>
+      <div class="card-desc-en">Fresh cream, mozzarella, onions, potatoes, bacon, reblochon, oregano, olive.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag viande">Viande</span><span class="tag fromage">Fromage</span></div>
+        <div class="card-price">16<span class="price-sup">€</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="viande fromage">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">15</div>
+      <div class="card-name">Raclette</div>
+      <div class="card-desc-fr">Crème fraîche, mozzarella, oignons, pommes de terre, jambon, raclette, origan, olive.</div>
+      <div class="card-desc-en">Fresh cream, mozzarella, onion, potato, ham, raclette, oregano, olive.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag viande">Viande</span><span class="tag fromage">Fromage</span></div>
+        <div class="card-price">16<span class="price-sup">€</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="veggie fromage">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">16</div>
+      <div class="card-name">Burrata</div>
+      <div class="card-desc-fr">Sauce tomate, mozzarella, origan, olive. Après cuisson : burrata, huile d'olive, sel Himalaya, poivre, roquette.</div>
+      <div class="card-desc-en">Tomato sauce, mozzarella, oregano, olive. After cooking: burrata, olive oil, Himalayan salt, ground pepper, arugula.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag fromage">Fromage</span></div>
+        <div class="card-price">15<span class="price-sup">€</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="veggie">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">17</div>
+      <div class="card-name">Margherita</div>
+      <div class="card-desc-fr">Sauce tomate, mozzarella, origan, olive.</div>
+      <div class="card-desc-en">Tomato sauce, mozzarella, oregano, olive.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag veggie">Végétarien</span></div>
+        <div class="card-price">9<span class="price-sup">€</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="viande">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">18</div>
+      <div class="card-name">Bresaola</div>
+      <div class="card-desc-fr">Oignons, après cuisson : viande séchée, tomates séchées, bufala, roquette, origan, olive.</div>
+      <div class="card-desc-en">Onions. After cooking: dried meat, dried tomatoes, bufala, arugula, oregano, olive.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag viande">Viande</span></div>
+        <div class="card-price">17<span class="price-sup">€</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="veggie">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">19</div>
+      <div class="card-name">Trio</div>
+      <div class="card-desc-fr">Sauce tomate, mozzarella, oignons, champignons, poivrons, olives, origan.</div>
+      <div class="card-desc-en">Tomato sauce, mozzarella, onions, mushrooms, peppers, olives, oregano.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag veggie">Végétarien</span></div>
+        <div class="card-price">12<span class="price-sup">€</span></div>
+      </div>
+    </div>
+
+    <div class="pizza-card" data-tags="veggie">
+      <div class="card-glow"></div><div class="card-shine"></div>
+      <div class="card-number">20</div>
+      <div class="card-name">Végétarien</div>
+      <div class="card-desc-fr">Sauce tomate, mozzarella, aubergines, poivrons, roquette, olives, origan.</div>
+      <div class="card-desc-en">Tomato sauce, mozzarella, eggplant, peppers, arugula, olives, oregano.</div>
+      <div class="card-footer">
+        <div class="card-tags"><span class="tag veggie">Végétarien</span></div>
+        <div class="card-price">13<span class="price-sup">€</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXTRAS -->
+<div class="extras-wrap">
+  <div class="section-heading" style="padding-top:1rem;">
+    <h2>Boissons & <span>Suppléments</span></h2>
+    <div class="heading-line"></div>
+  </div>
+  <div class="extras-section" id="boissons">
+    <div class="extras-block">
+      <div class="extras-block-title">Boissons · Drinks</div>
+      <div class="extras-item">
+        <div><div class="extras-item-name">Canette</div><div class="extras-note">Can · Soda</div></div>
+        <div class="extras-item-price">2€</div>
+      </div>
+      <div class="extras-item">
+        <div><div class="extras-item-name">Eau</div><div class="extras-note">Water · Mineral</div></div>
+        <div class="extras-item-price">1€</div>
+      </div>
+    </div>
+    <div class="extras-block" id="supplements">
+      <div class="extras-block-title">Suppléments · Extras</div>
+      <div class="extras-item">
+        <div><div class="extras-item-name">Viandes</div><div class="extras-note">Meat extras</div></div>
+        <div class="extras-item-price">+3€</div>
+      </div>
+      <div class="extras-item">
+        <div><div class="extras-item-name">Légumes</div><div class="extras-note">Vegetable extras</div></div>
+        <div class="extras-item-price">+2€</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Street Pizza</div>
+  <div class="footer-sub">Champion du Monde · Fondé par Idrissi Abddsamad</div>
+  <div class="footer-flag">
+    <span class="ff-g"></span><span class="ff-w"></span><span class="ff-r"></span>
+  </div>
+  <div class="footer-thanks">Merci · Thanks 🍕</div>
+</footer>
+
+<script>
+  /* Cursor */
+  const cur = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cur.style.left = ring.style.left = e.clientX + 'px';
+    cur.style.top  = ring.style.top  = e.clientY + 'px';
+  });
+  document.querySelectorAll('a,button,.pizza-card').forEach(el => {
+    el.addEventListener('mouseenter', () => ring.classList.add('big'));
+    el.addEventListener('mouseleave', () => ring.classList.remove('big'));
+  });
+
+  /* Nav scroll */
+  window.addEventListener('scroll', () =>
+    document.getElementById('nav').classList.toggle('scrolled', scrollY > 60)
+  );
+
+  /* Reveal on scroll */
+  const cards = document.querySelectorAll('.pizza-card');
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), 60); });
+  }, { threshold: 0.08 }).observe && cards.forEach(c =>
+    new IntersectionObserver(([e]) => { if (e.isIntersecting) setTimeout(() => c.classList.add('visible'), 60); },
+    { threshold: 0.08 }).observe(c)
+  );
+
+  /* Filter */
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach(c => {
+        const show = f === 'all' || (c.dataset.tags || '').includes(f);
+        c.classList.toggle('hidden-card', !show);
+        if (show) setTimeout(() => c.classList.add('visible'), 30);
+        else c.classList.remove('visible');
+      });
+    });
+  });
+
+  /* Theme toggle */
+  const html = document.documentElement;
+  const toggleBtn = document.getElementById('themeToggleBtn');
+  const toggleText = document.getElementById('toggleText');
+
+  function applyTheme(t) {
+    html.setAttribute('data-theme', t);
+    toggleText.textContent = t === 'dark' ? '🌙 Sombre' : '☀️ Italia';
+    try { localStorage.setItem('sp-theme', t); } catch(e) {}
+  }
+
+  // Load saved
+  let saved = 'light';
+  try { saved = localStorage.getItem('sp-theme') || 'light'; } catch(e) {}
+  applyTheme(saved);
+
+  toggleBtn.addEventListener('click', () => {
+    applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+</script>
+</body>
+</html>
