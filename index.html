@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr" data-theme="light">
 <head>
@@ -66,7 +67,7 @@ html { scroll-behavior:smooth; }
 body {
   background: var(--bg); color: var(--text-main);
   font-family:'Josefin Sans',sans-serif; font-weight:300;
-  overflow-x:hidden; cursor:none;
+  overflow-x:hidden;
   transition: background 0.55s, color 0.55s;
 }
 body::after {
@@ -77,24 +78,7 @@ body::after {
 ::-webkit-scrollbar-track { background:var(--bg); }
 ::-webkit-scrollbar-thumb { background:var(--accent); }
 
-/* ══════════════════════════════════════
-   CURSOR
-══════════════════════════════════════ */
-.cursor {
-  position:fixed; top:0; left:0; width:9px; height:9px;
-  background:var(--accent); border-radius:50%;
-  pointer-events:none; z-index:9999;
-  transform:translate(-50%,-50%);
-  transition: background 0.4s;
-}
-.cursor-ring {
-  position:fixed; top:0; left:0; width:34px; height:34px;
-  border:1px solid var(--accent); border-radius:50%; opacity:0.55;
-  pointer-events:none; z-index:9998;
-  transform:translate(-50%,-50%);
-  transition: width 0.3s, height 0.3s, border-color 0.4s;
-}
-.cursor-ring.big { width:52px; height:52px; opacity:0.85; }
+
 
 /* ══════════════════════════════════════
    NAV
@@ -126,7 +110,7 @@ nav.scrolled { padding:0.85rem 3rem; }
   display:flex; align-items:center; gap:0.65rem;
   background:none; border:1px solid var(--border);
   padding:0.4rem 0.85rem 0.4rem 0.65rem;
-  cursor:none; transition: border-color 0.4s, background 0.4s;
+  cursor:pointer; transition: border-color 0.4s, background 0.4s;
   border-radius:2px;
 }
 .theme-toggle-btn:hover { border-color:var(--accent); background:rgba(0,0,0,0.04); }
@@ -250,7 +234,7 @@ nav.scrolled { padding:0.85rem 3rem; }
   padding:0.5rem 1.4rem; border:1px solid var(--border);
   background:transparent; color:var(--text-sub);
   font-family:'Josefin Sans',sans-serif; font-size:0.58rem;
-  letter-spacing:0.28em; text-transform:uppercase; cursor:none;
+  letter-spacing:0.28em; text-transform:uppercase; cursor:pointer;
   position:relative; overflow:hidden;
   transition:color 0.3s, border-color 0.4s;
 }
@@ -437,9 +421,6 @@ footer {
 </style>
 </head>
 <body>
-
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -782,18 +763,6 @@ footer {
 </footer>
 
 <script>
-  /* Cursor */
-  const cur = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  document.addEventListener('mousemove', e => {
-    cur.style.left = ring.style.left = e.clientX + 'px';
-    cur.style.top  = ring.style.top  = e.clientY + 'px';
-  });
-  document.querySelectorAll('a,button,.pizza-card').forEach(el => {
-    el.addEventListener('mouseenter', () => ring.classList.add('big'));
-    el.addEventListener('mouseleave', () => ring.classList.remove('big'));
-  });
-
   /* Nav scroll */
   window.addEventListener('scroll', () =>
     document.getElementById('nav').classList.toggle('scrolled', scrollY > 60)
