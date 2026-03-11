@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="fr" data-theme="light">
+<html lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -221,29 +221,7 @@ nav.scrolled { padding:0.85rem 3rem; }
   opacity:0; animation:fadeUp 1s 1.3s forwards; transition:background 0.55s;
 }
 
-/* ══════════════════════════════════════
-   FILTERS
-══════════════════════════════════════ */
-.filters-section { padding:3.5rem 3rem 2rem; text-align:center; }
-.filters-label {
-  font-size:0.58rem; letter-spacing:0.42em; text-transform:uppercase;
-  color:var(--text-muted); margin-bottom:1.4rem; transition:color 0.55s;
-}
-.filters { display:flex; gap:0.6rem; justify-content:center; flex-wrap:wrap; }
-.filter-btn {
-  padding:0.5rem 1.4rem; border:1px solid var(--border);
-  background:transparent; color:var(--text-sub);
-  font-family:'Josefin Sans',sans-serif; font-size:0.58rem;
-  letter-spacing:0.28em; text-transform:uppercase; cursor:pointer;
-  position:relative; overflow:hidden;
-  transition:color 0.3s, border-color 0.4s;
-}
-.filter-btn::before {
-  content:''; position:absolute; inset:0; background:var(--accent);
-  transform:translateX(-101%); transition:transform 0.3s ease; z-index:-1;
-}
-.filter-btn.active::before, .filter-btn:hover::before { transform:translateX(0); }
-.filter-btn.active, .filter-btn:hover { color:#fff; border-color:var(--accent); }
+
 
 /* ══════════════════════════════════════
    SECTION HEADING
@@ -310,14 +288,17 @@ nav.scrolled { padding:0.85rem 3rem; }
   color:var(--text-main); line-height:1.2; margin-bottom:0.3rem; transition:color 0.55s;
 }
 .card-desc-fr {
-  font-size:0.7rem; color:var(--text-sub); line-height:1.75;
-  margin-bottom:0.3rem; transition:color 0.55s;
+  font-size:0.88rem; color:var(--text-sub); line-height:1.75;
+  margin-bottom:0.75rem; transition:color 0.55s;
+}
+.card-sep {
+  width:100%; height:1px; background:var(--border);
+  margin-bottom:0.75rem; transition:background 0.55s;
 }
 .card-desc-en {
-  font-size:0.62rem; color:var(--text-muted); font-style:italic;
-  line-height:1.65; margin-bottom:1.4rem;
-  border-left:1px solid var(--border); padding-left:0.7rem;
-  transition:color 0.55s, border-color 0.55s;
+  font-size:0.88rem; color:var(--accent); font-style:italic;
+  line-height:1.75; margin-bottom:1.4rem;
+  transition:color 0.55s;
 }
 .card-footer { display:flex; align-items:center; justify-content:space-between; }
 .card-tags { display:flex; gap:0.35rem; flex-wrap:wrap; }
@@ -457,18 +438,6 @@ footer {
   <div class="hero-divider"></div>
 </section>
 
-<!-- FILTERS -->
-<div class="filters-section">
-  <p class="filters-label">Filtrer le menu · Filter the menu</p>
-  <div class="filters">
-    <button class="filter-btn active" data-filter="all">Toutes</button>
-    <button class="filter-btn" data-filter="viande">🥩 Viande</button>
-    <button class="filter-btn" data-filter="veggie">🌿 Végétarien</button>
-    <button class="filter-btn" data-filter="fromage">🧀 Fromage</button>
-    <button class="filter-btn" data-filter="poisson">🐟 Poisson</button>
-  </div>
-</div>
-
 <!-- MENU -->
 <section class="menu-section" id="menu">
   <div class="section-heading">
@@ -482,9 +451,9 @@ footer {
       <div class="card-number">01</div>
       <div class="card-name">La Marocaine</div>
       <div class="card-desc-fr">Ratatouille, abricot moelleux, chorizo, chantilly de fromage Boursin, cerneaux de noix, coriandre, origan, olives.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Ratatouille, soft apricot, chorizo with Boursin cream cheese, walnuts, coriander, oregano, olives.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag viande">Viande</span><span class="tag fromage">Fromage</span></div>
         <div class="card-price">16<span class="price-sup">€90</span></div>
       </div>
     </div>
@@ -494,9 +463,9 @@ footer {
       <div class="card-number">02</div>
       <div class="card-name">Fraîcheur</div>
       <div class="card-desc-fr">Crème fraîche, mozzarella, champignons, œuf, origan, olive. Après cuisson : saumon fumé émincé.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Fresh cream, mozzarella, mushrooms, egg, oregano, olive. After cooking: sliced smoked salmon.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag poisson">Poisson</span></div>
         <div class="card-price">16<span class="price-sup">€90</span></div>
       </div>
     </div>
@@ -506,9 +475,9 @@ footer {
       <div class="card-number">03</div>
       <div class="card-name">Cannibale</div>
       <div class="card-desc-fr">Sauce tomate, mozzarella, viande hachée, oignons, poivrons, œuf, origan, olive.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Tomato sauce, mozzarella, minced meat, onions, peppers, egg, oregano, olive.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag viande">Viande</span></div>
         <div class="card-price">16<span class="price-sup">€50</span></div>
       </div>
     </div>
@@ -518,9 +487,9 @@ footer {
       <div class="card-number">04</div>
       <div class="card-name">Fico</div>
       <div class="card-desc-fr">Crème fraîche, oignons rouges, chèvre, figue sèche, miel, origan, olive.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Fresh cream, red onions, goat cheese, dried fig, honey, oregano, olive.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag veggie">Végétarien</span><span class="tag fromage">Fromage</span></div>
         <div class="card-price">16<span class="price-sup">€</span></div>
       </div>
     </div>
@@ -530,9 +499,9 @@ footer {
       <div class="card-number">05</div>
       <div class="card-name">Mimosa</div>
       <div class="card-desc-fr">Sauce tomate, mozzarella, thon, œuf, coriandre, origan, olive.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Tomato sauce, mozzarella, tuna, egg, coriander, oregano, olive.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag poisson">Poisson</span></div>
         <div class="card-price">14<span class="price-sup">€</span></div>
       </div>
     </div>
@@ -542,9 +511,9 @@ footer {
       <div class="card-number">06</div>
       <div class="card-name">Roquetta</div>
       <div class="card-desc-fr">Sauce tomate, mozzarella, oignons, tomates cerises, parmesan, roquette, origan, olive.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Tomato sauce, mozzarella, onions, cherry tomatoes, parmesan, arugula, oregano, olive.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag veggie">Végétarien</span></div>
         <div class="card-price">14<span class="price-sup">€</span></div>
       </div>
     </div>
@@ -554,9 +523,9 @@ footer {
       <div class="card-number">07</div>
       <div class="card-name">Indiana</div>
       <div class="card-desc-fr">Sauce tomate, mozzarella, poulet mariné au curry, oignons, roquette, origan, olive.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Tomato sauce, mozzarella, chicken marinated in curry, onions, arugula, oregano, olive.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag viande">Viande</span></div>
         <div class="card-price">16<span class="price-sup">€</span></div>
       </div>
     </div>
@@ -566,9 +535,9 @@ footer {
       <div class="card-number">08</div>
       <div class="card-name">Mont-Blanc</div>
       <div class="card-desc-fr">Crème fraîche, mozzarella, mozzarella fraîche, chèvre, échalote, origan, olive.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Fresh cream, mozzarella, fresh mozzarella, goat cheese, shallot, oregano, olive.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag fromage">Fromage</span></div>
         <div class="card-price">16<span class="price-sup">€</span></div>
       </div>
     </div>
@@ -578,9 +547,9 @@ footer {
       <div class="card-number">09</div>
       <div class="card-name">Reine</div>
       <div class="card-desc-fr">Sauce tomate, mozzarella, champignons, jambon, origan, olive.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Tomato sauce, mozzarella, mushrooms, ham, oregano, olive.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag viande">Viande</span></div>
         <div class="card-price">13<span class="price-sup">€</span></div>
       </div>
     </div>
@@ -590,9 +559,9 @@ footer {
       <div class="card-number">10</div>
       <div class="card-name">Calzone</div>
       <div class="card-desc-fr">Sauce tomate, jambon, champignons, œuf, origan, olive.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Tomato sauce, ham, mushrooms, egg, oregano, olive.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag viande">Viande</span></div>
         <div class="card-price">14<span class="price-sup">€</span></div>
       </div>
     </div>
@@ -602,9 +571,9 @@ footer {
       <div class="card-number">11</div>
       <div class="card-name">Chorizo</div>
       <div class="card-desc-fr">Sauce tomate, mozzarella, oignons, œuf, chorizo après cuisson, origan, olive.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Tomato sauce, mozzarella, onions, egg, chorizo after cooking, oregano, olive.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag viande">Viande</span></div>
         <div class="card-price">15<span class="price-sup">€</span></div>
       </div>
     </div>
@@ -614,9 +583,9 @@ footer {
       <div class="card-number">12</div>
       <div class="card-name">4 Fromages</div>
       <div class="card-desc-fr">Sauce tomate, mozzarella, chèvre, reblochon, roquefort, raclette, origan, olive.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Tomato sauce, mozzarella, goat cheese, reblochon, roquefort, raclette, oregano, olive.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag fromage">Fromage</span></div>
         <div class="card-price">14<span class="price-sup">€50</span></div>
       </div>
     </div>
@@ -626,9 +595,9 @@ footer {
       <div class="card-number">13</div>
       <div class="card-name">Chevrette</div>
       <div class="card-desc-fr">Crème fraîche, mozzarella, champignons, chèvre, miel, origan, olive.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Fresh cream, mozzarella, mushrooms, goat cheese, honey, oregano, olive.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag fromage">Fromage</span></div>
         <div class="card-price">14<span class="price-sup">€50</span></div>
       </div>
     </div>
@@ -638,9 +607,9 @@ footer {
       <div class="card-number">14</div>
       <div class="card-name">Montagnard</div>
       <div class="card-desc-fr">Crème fraîche, mozzarella, oignons, pommes de terre, lardons, reblochon, origan, olive.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Fresh cream, mozzarella, onions, potatoes, bacon, reblochon, oregano, olive.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag viande">Viande</span><span class="tag fromage">Fromage</span></div>
         <div class="card-price">16<span class="price-sup">€</span></div>
       </div>
     </div>
@@ -650,9 +619,9 @@ footer {
       <div class="card-number">15</div>
       <div class="card-name">Raclette</div>
       <div class="card-desc-fr">Crème fraîche, mozzarella, oignons, pommes de terre, jambon, raclette, origan, olive.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Fresh cream, mozzarella, onion, potato, ham, raclette, oregano, olive.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag viande">Viande</span><span class="tag fromage">Fromage</span></div>
         <div class="card-price">16<span class="price-sup">€</span></div>
       </div>
     </div>
@@ -662,9 +631,9 @@ footer {
       <div class="card-number">16</div>
       <div class="card-name">Burrata</div>
       <div class="card-desc-fr">Sauce tomate, mozzarella, origan, olive. Après cuisson : burrata, huile d'olive, sel Himalaya, poivre, roquette.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Tomato sauce, mozzarella, oregano, olive. After cooking: burrata, olive oil, Himalayan salt, ground pepper, arugula.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag fromage">Fromage</span></div>
         <div class="card-price">15<span class="price-sup">€</span></div>
       </div>
     </div>
@@ -674,9 +643,9 @@ footer {
       <div class="card-number">17</div>
       <div class="card-name">Margherita</div>
       <div class="card-desc-fr">Sauce tomate, mozzarella, origan, olive.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Tomato sauce, mozzarella, oregano, olive.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag veggie">Végétarien</span></div>
         <div class="card-price">9<span class="price-sup">€</span></div>
       </div>
     </div>
@@ -686,9 +655,9 @@ footer {
       <div class="card-number">18</div>
       <div class="card-name">Bresaola</div>
       <div class="card-desc-fr">Oignons, après cuisson : viande séchée, tomates séchées, bufala, roquette, origan, olive.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Onions. After cooking: dried meat, dried tomatoes, bufala, arugula, oregano, olive.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag viande">Viande</span></div>
         <div class="card-price">17<span class="price-sup">€</span></div>
       </div>
     </div>
@@ -698,9 +667,9 @@ footer {
       <div class="card-number">19</div>
       <div class="card-name">Trio</div>
       <div class="card-desc-fr">Sauce tomate, mozzarella, oignons, champignons, poivrons, olives, origan.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Tomato sauce, mozzarella, onions, mushrooms, peppers, olives, oregano.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag veggie">Végétarien</span></div>
         <div class="card-price">12<span class="price-sup">€</span></div>
       </div>
     </div>
@@ -710,9 +679,9 @@ footer {
       <div class="card-number">20</div>
       <div class="card-name">Végétarien</div>
       <div class="card-desc-fr">Sauce tomate, mozzarella, aubergines, poivrons, roquette, olives, origan.</div>
+      <div class="card-sep"></div>
       <div class="card-desc-en">Tomato sauce, mozzarella, eggplant, peppers, arugula, olives, oregano.</div>
       <div class="card-footer">
-        <div class="card-tags"><span class="tag veggie">Végétarien</span></div>
         <div class="card-price">13<span class="price-sup">€</span></div>
       </div>
     </div>
@@ -804,8 +773,8 @@ footer {
   }
 
   // Load saved
-  let saved = 'light';
-  try { saved = localStorage.getItem('sp-theme') || 'light'; } catch(e) {}
+  let saved = 'dark';
+  try { saved = localStorage.getItem('sp-theme') || 'dark'; } catch(e) {}
   applyTheme(saved);
 
   toggleBtn.addEventListener('click', () => {
