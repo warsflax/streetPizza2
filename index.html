@@ -314,6 +314,10 @@ nav.scrolled { padding:0.85rem 3rem; }
   gap:1.5px; background:var(--grid-gap); border:1px solid var(--grid-gap);
   margin-bottom:6rem; transition:background 0.55s, border-color 0.55s;
 }
+.extras-section.single-col {
+  grid-template-columns:1fr;
+  margin-bottom:1.5rem;
+}
 .extras-block { background:var(--bg-extra); padding:2.5rem; transition:background 0.55s; }
 .extras-block-title {
   font-size:0.58rem; letter-spacing:0.42em; text-transform:uppercase;
@@ -329,10 +333,17 @@ nav.scrolled { padding:0.85rem 3rem; }
   font-family:'Cormorant Garamond',serif; font-size:1.15rem;
   color:var(--text-main); transition:color 0.55s;
 }
+.extras-item-name.en {
+  font-style:italic; color:var(--accent);
+}
 .extras-note { font-size:0.58rem; color:var(--text-muted); margin-top:0.2rem; transition:color 0.55s; }
 .extras-item-price {
   font-family:'Cormorant Garamond',serif; font-size:1.15rem;
   color:var(--accent); transition:color 0.55s;
+}
+.dessert-sep {
+  width:100%; height:1px; background:var(--border);
+  margin:0.75rem 0; transition:background 0.55s;
 }
 
 /* ══════════════════════════════════════
@@ -438,7 +449,6 @@ nav.scrolled { padding:0.85rem 3rem; }
 [data-theme="light"] .location-map iframe {
   filter:grayscale(0.15) contrast(0.95) brightness(1.02);
 }
-/* Thin accent border top on map */
 .location-map::before {
   content:''; position:absolute; top:0; left:0; right:0; height:2px;
   background:linear-gradient(90deg, var(--accent), transparent);
@@ -512,7 +522,7 @@ footer {
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="#menu">Menu</a></li>
-       <li><a href="#desserts">Desserts</a></li>
+      <li><a href="#desserts">Desserts</a></li>
       <li><a href="#boissons">Boissons</a></li>
       <li><a href="#supplements">Suppléments</a></li>
       <li><a href="#localisation">Nous Trouver</a></li>
@@ -791,42 +801,37 @@ footer {
 
   </div>
 </section>
-   <!-- ✅ DESSERTS — ajouté avant les boissons -->
-<div class="extras-section" id="desserts" style="margin-bottom:1.5px;">
-  <div class="extras-block">
-    <div class="extras-block-title">Desserts · Sweets</div>
-    <div class="extras-item">
-      <div>
-        <div class="extras-item-name">Choco Banane</div>
-        <div class="extras-note">Nutella, banane, céréales de chocolat</div>
-      </div>
-      <div class="extras-item-price">7€</div>
-    </div>
-    <div class="extras-item" style="border-bottom:none; margin-bottom:0;">
-      <div>
-        <div class="extras-item-name" style="font-style:italic; color:var(--accent);">Chocolate Banana</div>
-        <div class="extras-note">Nutella, banana, chocolate cereal</div>
-      </div>
-      <div class="extras-item-price">7€</div>
-    </div>
-  </div>
-</div>
-<!-- EXTRAS -->
+
+<!-- DESSERTS + BOISSONS + SUPPLÉMENTS -->
 <div class="extras-wrap">
   <div class="section-heading" style="padding-top:1rem;">
-    <h2>Boissons & <span>Suppléments</span></h2>
+    <h2>Desserts, Boissons & <span>Suppléments</span></h2>
     <div class="heading-line"></div>
   </div>
 
- 
-
-  <div class="extras-section" id="boissons">
-<!-- EXTRAS -->
-<div class="extras-wrap">
-  <div class="section-heading" style="padding-top:1rem;">
-    <h2>Boissons & <span>Suppléments</span></h2>
-    <div class="heading-line"></div>
+  <!-- DESSERTS -->
+  <div class="extras-section single-col" id="desserts">
+    <div class="extras-block">
+      <div class="extras-block-title">Desserts · Sweets</div>
+      <div class="extras-item">
+        <div>
+          <div class="extras-item-name">Choco Banane</div>
+          <div class="extras-note">Nutella, banane, céréales de chocolat</div>
+        </div>
+        <div class="extras-item-price">7€</div>
+      </div>
+      <div class="dessert-sep"></div>
+      <div class="extras-item">
+        <div>
+          <div class="extras-item-name en">Chocolate Banana</div>
+          <div class="extras-note">Nutella, banana, chocolate cereal</div>
+        </div>
+        <div class="extras-item-price">7€</div>
+      </div>
+    </div>
   </div>
+
+  <!-- BOISSONS & SUPPLÉMENTS -->
   <div class="extras-section" id="boissons">
     <div class="extras-block">
       <div class="extras-block-title">Boissons · Drinks</div>
@@ -851,6 +856,7 @@ footer {
       </div>
     </div>
   </div>
+
 </div>
 
 <!-- MAP / LOCATION -->
